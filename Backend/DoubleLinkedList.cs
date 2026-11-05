@@ -69,7 +69,7 @@ public class DoubleLinkedList<T>
     // Show the list from last to first.
     public string ShowReverse()
     {
-        string output = "";
+        string output = ""; 
         DoubleNode<T>? current = tail;
 
         while (current != null)
@@ -80,6 +80,109 @@ public class DoubleLinkedList<T>
 
         output += "null";
         return output;
+    }
+
+
+    // Insert data in ascending order.
+    public void Insert(T data)
+    {
+        OrderAsc();
+        
+        DoubleNode<T> newNode = new DoubleNode<T>(data); ////Create a node with the data entered by the user.
+
+        if (head == null)
+        {
+            head = newNode; // Check if the list is empty. If it is, the new node becomes the head and the tail.
+            tail = newNode;
+            return;
+        }
+
+        DoubleNode<T>? current = head; //Use `current` to traverse the list and find where the new value should be placed.
+
+        while (current != null &&
+               Comparer<T>.Default.Compare(current.Data, data) <= 0) //compare values ​​of different types
+        {
+            current = current.Next;
+        }
+
+        if (current == head) 
+        {
+            InsertFirst(data);
+            return;
+        }
+
+        if (current == null)
+        {
+            InsertLast(data);
+            return;
+        }
+
+        newNode.Prev = current.Prev;
+        newNode.Next = current;
+        current.Prev!.Next = newNode;
+        current.Prev = newNode;
+    }
+
+     // Order the list from mayor to menor.
+    
+    public void OrderDesc()
+    {
+        if (head == null || head == tail)
+        {
+            return;
+        }
+
+        if (Comparer<T>.Default.Compare(head.Data, tail!.Data) > 0) //check whether the first element is greater than the last. If it is already in descending order, avoid reversing it again.
+        {
+            return;
+        }
+
+        DoubleNode<T>? current = head;
+
+        while (current != null)
+        {
+            DoubleNode<T>? nextNode = current.Next;
+
+            current.Next = current.Prev;
+            current.Prev = nextNode;
+
+            current = nextNode;
+        }
+
+        DoubleNode<T>? temp = head;
+        head = tail;
+        tail = temp;
+    }
+
+
+    // Order the list from menor to mayor
+    public void OrderAsc()
+    {
+        if (head == null || head == tail)
+        {
+            return;
+        }
+
+        if (Comparer<T>.Default.Compare(head.Data, tail!.Data) <= 0)
+        {
+            return;
+        }
+
+        DoubleNode<T>? current = head;
+
+        while (current != null)
+        {
+            DoubleNode<T>? nextNode = current.Next;
+
+            current.Next = current.Prev;
+            current.Prev = nextNode;
+
+            current = nextNode;
+        }
+
+        DoubleNode<T>? temp = head;
+        head = tail;
+        tail = temp;
     }
 
 
