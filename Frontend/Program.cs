@@ -54,19 +54,60 @@ while (option != 0)
              Console.WriteLine(list);
              break;
         case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-            Console.WriteLine("Opción aún no disponible.");
+            Console.WriteLine(list.ShowModa());
             break;
+        case 6:
+            Console.WriteLine("\nGráfico de frecuencias:");
+            Console.WriteLine(list.ShowChart());
+            break;
+        case 7:
+            Console.Write("Ingrese el valor a buscar: ");
+            string searchValue = Console.ReadLine() ?? "";
 
+            if (list.Exists(searchValue))
+            {
+                Console.WriteLine("El valor existe en la lista.");
+            }
+            else
+            {
+                Console.WriteLine("El valor no existe en la lista.");
+            }
+            break;
+        case 8:
+            Console.Write("Ingrese el valor a eliminar: ");
+            string removeValue = Console.ReadLine() ?? "";
+
+            if (list.RemoveFirst(removeValue))
+            {
+                Console.WriteLine("Valor eliminado.");
+            }
+            else
+            {
+                Console.WriteLine("El valor no existe en la lista.");
+            }
+            break;
+        case 9:
+            Console.Write("Ingrese el valor a eliminar: ");
+            string removeAllValue = Console.ReadLine() ?? "";
+
+            int removed = list.DeleteAll(removeAllValue);
+
+            if (removed > 0)
+            {
+                 Console.WriteLine("Valores eliminados: " + removed);
+            }
+            else
+            {
+                Console.WriteLine("El valor no existe en la lista.");
+            }
+            break;
         case 0:
-            Console.WriteLine("¡Hasta luego!");
+            Console.WriteLine("¡Chao mij@!");
             break;
 
         default:
             Console.WriteLine("Opción no válida.");
             break;
     }
+    
 }
